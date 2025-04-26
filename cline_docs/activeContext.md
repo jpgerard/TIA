@@ -2,7 +2,9 @@
 
 ## Current Work
 
-We have been testing the Streamlit proof-of-concept (POC) application for TariffDoc AI and fixing issues discovered during testing. We identified and fixed a search functionality issue where certain hyphenated terms were not being properly handled, resulting in irrelevant search results. We've also addressed a more fundamental issue with the search results table not displaying relevant results for automotive bumper parts.
+We have prepared the TariffDoc AI application for deployment to Streamlit Cloud. The application has been pushed to a GitHub repository at https://github.com/jpgerard/TIA and is ready to be deployed to Streamlit Cloud. We've created a streamlit_app.py file that serves as the entry point for Streamlit Cloud and added deployment instructions in STREAMLIT_DEPLOYMENT.md.
+
+Previously, we were testing the Streamlit proof-of-concept (POC) application for TariffDoc AI and fixing issues discovered during testing. We identified and fixed a search functionality issue where certain hyphenated terms were not being properly handled, resulting in irrelevant search results. We've also addressed a more fundamental issue with the search results table not displaying relevant results for automotive bumper parts.
 
 ## Recent Changes
 
@@ -54,26 +56,27 @@ We have been testing the Streamlit proof-of-concept (POC) application for Tariff
 
 ## Next Steps
 
-1. **Test the Fixed Search Functionality**:
+1. **Deploy to Streamlit Cloud**:
+   - Follow the instructions in STREAMLIT_DEPLOYMENT.md to deploy the application to Streamlit Cloud.
+   - Configure the necessary environment variables for LLM features (if desired).
+   - Test the deployed application to ensure it works correctly.
+
+2. **Test the Deployed Application**:
+   - Verify that all features work correctly in the deployed environment.
    - Test the search functionality with various product descriptions, including those with hyphens.
-   - Verify that the results are relevant and appropriate.
    - Test with and without the LLM service enabled to ensure both scenarios work correctly.
    - Verify that automotive bumper-related searches return the appropriate HTS codes (8708.10.60).
 
-2. **Verify LLM Integration**:
-   - Confirm the OpenAI API key in the .env file is working.
-   - Test the enhanced search capabilities with the fixed code.
-   - Verify the confidence analysis for HTS codes.
-   - Check the expert analysis in the generated documents.
-
-3. **Document Testing Results**:
-   - Update the progress.md file with findings.
-   - Note any additional issues that need to be addressed.
+3. **Document Deployment Results**:
+   - Update the progress.md file with deployment status and any issues encountered.
+   - Note any differences between the local and deployed environments.
 
 4. **Consider Additional Improvements**:
    - Enhance error handling for API failures.
    - Improve the fallback mechanism to provide more relevant results.
    - Add more comprehensive logging to help diagnose issues.
    - Consider adding unit tests for critical functionality.
+   - Implement user authentication for the deployed application.
+   - Add monitoring and analytics to track usage patterns.
 
 The application has been improved to handle different query formats, properly validate the LLM service, and use the LLM to identify product categories and suggest appropriate HTS codes. These changes should provide a better user experience with more relevant search results.
