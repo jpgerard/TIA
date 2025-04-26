@@ -234,6 +234,11 @@ with tab2:
         
         # Display results in a table
         if results['hts_results']:
+            # Check if any results are using fallback data
+            using_fallback = any(result.get("is_fallback", False) for result in results['hts_results'])
+            if using_fallback:
+                st.warning("⚠️ Using sample data. Live API connection unavailable.")
+            
             # Create a DataFrame for display
             df_data = []
             for result in results['hts_results']:

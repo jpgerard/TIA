@@ -1,0 +1,221 @@
+[
+  {
+    "hts_code": "8708.10.3010",
+    "rates": {
+      "general": "2.5%",
+      "special": {
+        "CA": "Free",
+        "MX": "Free",
+        "KR": "Free",
+        "JP": "1.2%"
+      },
+      "column2": "25%"
+    },
+    "trade_agreements": {
+      "USMCA": {
+        "eligible": true,
+        "rate": "Free",
+        "requirements": "Regional value content of at least 60%"
+      },
+      "US-KR": {
+        "eligible": true,
+        "rate": "Free",
+        "requirements": "Must meet US-Korea FTA rules of origin"
+      },
+      "US-JP": {
+        "eligible": true,
+        "rate": "1.2%",
+        "requirements": "Must meet US-Japan Trade Agreement rules of origin"
+      }
+    }
+  },
+  {
+    "hts_code": "8708.10.6030",
+    "rates": {
+      "general": "2.5%",
+      "special": {
+        "CA": "Free",
+        "MX": "Free",
+        "KR": "Free",
+        "JP": "1.2%"
+      },
+      "column2": "25%"
+    },
+    "trade_agreements": {
+      "USMCA": {
+        "eligible": true,
+        "rate": "Free",
+        "requirements": "Regional value content of at least 60%"
+      },
+      "US-KR": {
+        "eligible": true,
+        "rate": "Free",
+        "requirements": "Must meet US-Korea FTA rules of origin"
+      },
+      "US-JP": {
+        "eligible": true,
+        "rate": "1.2%",
+        "requirements": "Must meet US-Japan Trade Agreement rules of origin"
+      }
+    }
+  },
+  {
+    "hts_code": "8708.10.6050",
+    "rates": {
+      "general": "2.5%",
+      "special": {
+        "CA": "Free",
+        "MX": "Free",
+        "KR": "Free",
+        "JP": "1.2%"
+      },
+      "column2": "25%"
+    },
+    "trade_agreements": {
+      "USMCA": {
+        "eligible": true,
+        "rate": "Free",
+        "requirements": "Regional value content of at least 60%"
+      },
+      "US-KR": {
+        "eligible": true,
+        "rate": "Free",
+        "requirements": "Must meet US-Korea FTA rules of origin"
+      },
+      "US-JP": {
+        "eligible": true,
+        "rate": "1.2%",
+        "requirements": "Must meet US-Japan Trade Agreement rules of origin"
+      }
+    }
+  },
+  {
+    "hts_code": "3926.30.1000",
+    "rates": {
+      "general": "5.3%",
+      "special": {
+        "CA": "Free",
+        "MX": "Free",
+        "KR": "Free",
+        "JP": "2.6%"
+      },
+      "column2": "80%"
+    },
+    "trade_agreements": {
+      "USMCA": {
+        "eligible": true,
+        "rate": "Free",
+        "requirements": "Regional value content of at least 50%"
+      },
+      "US-KR": {
+        "eligible": true,
+        "rate": "Free",
+        "requirements": "Must meet US-Korea FTA rules of origin"
+      },
+      "US-JP": {
+        "eligible": true,
+        "rate": "2.6%",
+        "requirements": "Must meet US-Japan Trade Agreement rules of origin"
+      }
+    }
+  },
+  {
+    "hts_code": "3926.90.2500",
+    "rates": {
+      "general": "6.5%",
+      "special": {
+        "CA": "Free",
+        "MX": "Free",
+        "KR": "Free",
+        "JP": "3.2%"
+      },
+      "column2": "57.5%"
+    },
+    "trade_agreements": {
+      "USMCA": {
+        "eligible": true,
+        "rate": "Free",
+        "requirements": "Regional value content of at least 50%"
+      },
+      "US-KR": {
+        "eligible": true,
+        "rate": "Free",
+        "requirements": "Must meet US-Korea FTA rules of origin"
+      },
+      "US-JP": {
+        "eligible": true,
+        "rate": "3.2%",
+        "requirements": "Must meet US-Japan Trade Agreement rules of origin"
+      }
+    }
+  },
+  {
+    "hts_code": "3926.90.9996",
+    "rates": {
+      "general": "5.3%",
+      "special": {
+        "CA": "Free",
+        "MX": "Free",
+        "KR": "Free",
+        "JP": "2.6%"
+      },
+      "column2": "80%"
+    },
+    "trade_agreements": {
+      "USMCA": {
+        "eligible": true,
+        "rate": "Free",
+        "requirements": "Regional value content of at least 50%"
+      },
+      "US-KR": {
+        "eligible": true,
+        "rate": "Free",
+        "requirements": "Must meet US-Korea FTA rules of origin"
+      },
+      "US-JP": {
+        "eligible": true,
+        "rate": "2.6%",
+        "requirements": "Must meet US-Japan Trade Agreement rules of origin"
+      }
+    }
+  },
+  {
+    "hts_code": "7318.15.2010",
+    "rates": {
+      "general": "Free",
+      "special": {},
+      "column2": "45%"
+    },
+    "trade_agreements": {}
+  },
+  {
+    "hts_code": "7318.29.0000",
+    "rates": {
+      "general": "2.8%",
+      "special": {
+        "CA": "Free",
+        "MX": "Free",
+        "KR": "Free",
+        "JP": "1.4%"
+      },
+      "column2": "45%"
+    },
+    "trade_agreements": {
+      "USMCA": {
+        "eligible": true,
+        "rate": "Free",
+        "requirements": "Regional value content of at least 50%"
+      },
+      "US-KR": {
+        "eligible": true,
+        "rate": "Free",
+        "requirements": "Must meet US-Korea FTA rules of origin"
+      },
+      "US-JP": {
+        "eligible": true,
+        "rate": "1.4%",
+        "requirements": "Must meet US-Japan Trade Agreement rules of origin"
+      }
+    }
+  }
+]

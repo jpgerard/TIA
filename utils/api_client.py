@@ -51,6 +51,11 @@ class USITCApiClient:
         if not results:
             print("API search failed, using fallback data")
             results = self._get_fallback_results(query)
+            
+            # Add a message to each result indicating it's fallback data
+            for result in results:
+                result["is_fallback"] = True
+                result["fallback_message"] = "Using sample data. Live API connection unavailable."
         
         # Cache the results if enabled
         if self.cache_enabled:

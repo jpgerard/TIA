@@ -1,0 +1,52 @@
+[
+  {
+    "code": "USMCA",
+    "name": "United States-Mexico-Canada Agreement",
+    "members": ["US", "CA", "MX"],
+    "implemented": "July 1, 2020",
+    "replaces": "NAFTA",
+    "key_provisions": [
+      "Duty-free treatment for originating goods",
+      "Regional value content requirements",
+      "Product-specific rules of origin"
+    ],
+    "url": "https://ustr.gov/trade-agreements/free-trade-agreements/united-states-mexico-canada-agreement"
+  },
+  {
+    "code": "US-KR",
+    "name": "United States-Korea Free Trade Agreement",
+    "members": ["US", "KR"],
+    "implemented": "March 15, 2012",
+    "key_provisions": [
+      "Elimination of tariffs on most goods",
+      "Strengthened intellectual property protections",
+      "Improved market access for services"
+    ],
+    "url": "https://ustr.gov/trade-agreements/free-trade-agreements/korus-fta"
+  },
+  {
+    "code": "US-JP",
+    "name": "United States-Japan Trade Agreement",
+    "members": ["US", "JP"],
+    "implemented": "January 1, 2020",
+    "key_provisions": [
+      "Reduced or eliminated tariffs on agricultural and industrial goods",
+      "Digital trade provisions",
+      "Limited scope compared to comprehensive FTAs"
+    ],
+    "url": "https://ustr.gov/countries-regions/japan-korea-apec/japan/us-japan-trade-agreement-negotiations"
+  },
+  {
+    "code": "GSP",
+    "name": "Generalized System of Preferences",
+    "type": "Preference Program",
+    "beneficiaries": ["Various developing countries"],
+    "implemented": "1976 (with periodic renewals)",
+    "key_provisions": [
+      "Duty-free treatment for thousands of products",
+      "Subject to country eligibility criteria",
+      "Product-specific rules and limitations"
+    ],
+    "url": "https://ustr.gov/issue-areas/trade-development/preference-programs/generalized-system-preference-gsp"
+  }
+]

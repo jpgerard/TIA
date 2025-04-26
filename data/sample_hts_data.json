@@ -1,0 +1,111 @@
+[
+  {
+    "hts_code": "8708.10.3010",
+    "description": "Parts and accessories of motor vehicles: Bumpers and parts thereof: Bumpers",
+    "rates": {
+      "general": "2.5%",
+      "special": {
+        "CA": "Free",
+        "MX": "Free"
+      },
+      "column2": "25%"
+    },
+    "unit_of_quantity": "kg",
+    "additional_info": "For use in passenger vehicles"
+  },
+  {
+    "hts_code": "8708.10.6030",
+    "description": "Parts and accessories of motor vehicles: Bumpers and parts thereof: Parts of bumpers: Fascia support",
+    "rates": {
+      "general": "2.5%",
+      "special": {
+        "CA": "Free",
+        "MX": "Free"
+      },
+      "column2": "25%"
+    },
+    "unit_of_quantity": "kg",
+    "additional_info": "For use in passenger vehicles"
+  },
+  {
+    "hts_code": "8708.10.6050",
+    "description": "Parts and accessories of motor vehicles: Bumpers and parts thereof: Parts of bumpers: Other",
+    "rates": {
+      "general": "2.5%",
+      "special": {
+        "CA": "Free",
+        "MX": "Free"
+      },
+      "column2": "25%"
+    },
+    "unit_of_quantity": "kg",
+    "additional_info": "For use in passenger vehicles"
+  },
+  {
+    "hts_code": "3926.30.1000",
+    "description": "Other articles of plastics: Fittings for furniture, coachwork or the like",
+    "rates": {
+      "general": "5.3%",
+      "special": {
+        "CA": "Free",
+        "MX": "Free"
+      },
+      "column2": "80%"
+    },
+    "unit_of_quantity": "kg",
+    "additional_info": "Plastic fittings for automotive use"
+  },
+  {
+    "hts_code": "3926.90.2500",
+    "description": "Other articles of plastics: Other: Handles and knobs",
+    "rates": {
+      "general": "6.5%",
+      "special": {
+        "CA": "Free",
+        "MX": "Free"
+      },
+      "column2": "57.5%"
+    },
+    "unit_of_quantity": "kg",
+    "additional_info": "Plastic handles and knobs"
+  },
+  {
+    "hts_code": "3926.90.9996",
+    "description": "Other articles of plastics: Other: Other",
+    "rates": {
+      "general": "5.3%",
+      "special": {
+        "CA": "Free",
+        "MX": "Free"
+      },
+      "column2": "80%"
+    },
+    "unit_of_quantity": "kg",
+    "additional_info": "Other plastic articles not elsewhere specified"
+  },
+  {
+    "hts_code": "7318.15.2010",
+    "description": "Screws, bolts, nuts, coach screws, screw hooks, rivets, cotters, cotter pins, washers and similar articles, of iron or steel: Threaded articles: Other screws and bolts, whether or not with their nuts or washers: Other: Bolts",
+    "rates": {
+      "general": "Free",
+      "special": {},
+      "column2": "45%"
+    },
+    "unit_of_quantity": "kg",
+    "additional_info": "Bolts of iron or steel"
+  },
+  {
+    "hts_code": "7318.29.0000",
+    "description": "Screws, bolts, nuts, coach screws, screw hooks, rivets, cotters, cotter pins, washers and similar articles, of iron or steel: Non-threaded articles: Other",
+    "rates": {
+      "general": "2.8%",
+      "special": {
+        "CA": "Free",
+        "MX": "Free"
+      },
+      "column2": "45%"
+    },
+    "unit_of_quantity": "kg",
+    "additional_info": "Non-threaded fasteners of iron or steel"
+  }
+]
