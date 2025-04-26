@@ -27,12 +27,22 @@ This document provides step-by-step instructions for deploying the TariffDoc AI 
 3. Set the main file path: `streamlit_app.py`
 4. Click "Advanced settings" to configure environment variables
 
-### 4. Configure Environment Variables (Optional)
+### 4. Configure Secrets (Optional)
 
-If you want to enable LLM features, add the following environment variables:
+If you want to enable LLM features, add the following secrets in the Streamlit Cloud dashboard:
 
-1. `OPENAI_API_KEY`: Your OpenAI API key
-2. `OPENAI_MODEL`: The OpenAI model to use (defaults to gpt-4 if not specified)
+1. Click on "Advanced settings" when deploying your app
+2. Go to the "Secrets" section
+3. Add your secrets in TOML format as follows:
+
+```toml
+# OpenAI API configuration
+[openai]
+OPENAI_API_KEY = "sk-your-openai-api-key-here"
+OPENAI_MODEL = "gpt-4"
+```
+
+Note: The application is configured to look for secrets in this specific format. Make sure to use the exact structure shown above.
 
 ### 5. Deploy the App
 

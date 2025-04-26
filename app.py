@@ -63,8 +63,19 @@ def initialize_services():
     api_client = USITCApiClient(cache_enabled=True)
     
     # Initialize LLM service if API key is available
-    openai_api_key = os.getenv("OPENAI_API_KEY")
-    openai_model = os.getenv("OPENAI_MODEL", "gpt-4")
+    # Try to get API key from Streamlit secrets first (for Streamlit Cloud deployment)
+    # Fall back to environment variables (for local development)
+    openai_api_key = None
+    openai_model = "gpt-4"
+    
+    # Check if running on Streamlit Cloud with secrets
+    try:
+        openai_api_key = st.secrets["openai"]["OPENAI_API_KEY"]
+        openai_model = st.secrets["openai"].get("OPENAI_MODEL", "gpt-4")
+    except (KeyError, AttributeError):
+        # Fall back to environment variables
+        openai_api_key = os.getenv("OPENAI_API_KEY")
+        openai_model = os.getenv("OPENAI_MODEL", "gpt-4")
     
     llm_service = None
     if openai_api_key:
