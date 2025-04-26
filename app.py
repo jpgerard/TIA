@@ -186,10 +186,26 @@ with tab1:
                     st.session_state.pdf_buffer = None
                     
                     # Add debug message
-                    st.info("Switching to results tab...")
+                    st.info("Search completed. Displaying results directly without tab switch.")
                     
-                    # Switch to results tab
-                    st.experimental_rerun()
+                    # Instead of switching tabs, display results directly
+                    st.success("Search successful! Results are below:")
+                    
+                    # Display results in a simple format
+                    if results['hts_results']:
+                        st.write(f"Found {len(results['hts_results'])} results.")
+                        
+                        # Display the first result as an example
+                        first_result = results['hts_results'][0]
+                        st.write(f"First result: {first_result['hts_code']} - {first_result['description']}")
+                        
+                        # Store results in session state for the Results tab
+                        st.session_state.search_results = results
+                        
+                        # Provide instructions to view full results
+                        st.info("Click on the 'Results' tab above to view all results.")
+                    else:
+                        st.warning("No results found. Try a different search term.")
             except Exception as e:
                 st.error(f"An error occurred during search: {str(e)}")
                 st.error("Please check the following:")
