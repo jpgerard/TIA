@@ -12,4 +12,10 @@ beautifulsoup4==4.12.2
 # Add additional dependencies that might be needed
 protobuf==3.20.3
 pydeck==0.8.0
-pyarrow==12.0.0
+
+# Remove pyarrow as it's causing build issues
+# pyarrow==12.0.0
+
+# Add setuptools which might be needed for distutils
+setuptools>=65.5.0
+wheel>=0.38.0
