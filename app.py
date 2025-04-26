@@ -162,24 +162,29 @@ with tab1:
         if not product_description:
             st.error("Please enter a product description")
         else:
-            with st.spinner("Searching for HTS codes..."):
-                # Analyze the product
-                results = services["product_analyzer"].analyze_product(
-                    product_description=product_description,
-                    origin_country=origin_country,
-                    destination_country=destination_country
-                )
-                
-                # Store results in session state
-                st.session_state.search_results = results
-                
-                # Clear any previously selected HTS code
-                st.session_state.selected_hts_code = None
-                st.session_state.document_data = None
-                st.session_state.pdf_buffer = None
-                
-                # Switch to results tab
-                st.experimental_rerun()
+            try:
+                with st.spinner("Searching for HTS codes..."):
+                    # Analyze the product
+                    results = services["product_analyzer"].analyze_product(
+                        product_description=product_description,
+                        origin_country=origin_country,
+                        destination_country=destination_country
+                    )
+                    
+                    # Store results in session state
+                    st.session_state.search_results = results
+                    
+                    # Clear any previously selected HTS code
+                    st.session_state.selected_hts_code = None
+                    st.session_state.document_data = None
+                    st.session_state.pdf_buffer = None
+                    
+                    # Switch to results tab
+                    st.experimental_rerun()
+            except Exception as e:
+                st.error(f"An error occurred during search: {str(e)}")
+                import traceback
+                st.text(traceback.format_exc())
 
 # Results Tab
 with tab2:
@@ -325,21 +330,26 @@ with tab2:
                     st.markdown(f"- {description}")
             
             if st.button("Generate Analysis", type="primary"):
-                with st.spinner("Generating tariff analysis..."):
-                    # Get comprehensive tariff information
-                    document_data = services["product_analyzer"].get_tariff_document_data(
-                        product_description=results['product_description'],
-                        hts_code=selected_hts_code,
-                        origin_country=results['origin_country'],
-                        destination_country=results['destination_country']
-                    )
-                    
-                    # Store in session state
-                    st.session_state.selected_hts_code = selected_hts_code
-                    st.session_state.document_data = document_data
-                    
-                    # Switch to analysis tab
-                    st.experimental_rerun()
+                try:
+                    with st.spinner("Generating tariff analysis..."):
+                        # Get comprehensive tariff information
+                        document_data = services["product_analyzer"].get_tariff_document_data(
+                            product_description=results['product_description'],
+                            hts_code=selected_hts_code,
+                            origin_country=results['origin_country'],
+                            destination_country=results['destination_country']
+                        )
+                        
+                        # Store in session state
+                        st.session_state.selected_hts_code = selected_hts_code
+                        st.session_state.document_data = document_data
+                        
+                        # Switch to analysis tab
+                        st.experimental_rerun()
+                except Exception as e:
+                    st.error(f"An error occurred while generating analysis: {str(e)}")
+                    import traceback
+                    st.text(traceback.format_exc())
         else:
             st.warning("No HTS codes found for the given product description. Try a more specific description or different search terms.")
     else:
