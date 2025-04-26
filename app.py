@@ -164,12 +164,18 @@ with tab1:
         else:
             try:
                 with st.spinner("Searching for HTS codes..."):
+                    # Add debug message
+                    st.info("Starting search process...")
+                    
                     # Analyze the product
                     results = services["product_analyzer"].analyze_product(
                         product_description=product_description,
                         origin_country=origin_country,
                         destination_country=destination_country
                     )
+                    
+                    # Add debug message
+                    st.info(f"Search completed. Found {len(results.get('hts_results', []))} results.")
                     
                     # Store results in session state
                     st.session_state.search_results = results
@@ -179,12 +185,28 @@ with tab1:
                     st.session_state.document_data = None
                     st.session_state.pdf_buffer = None
                     
+                    # Add debug message
+                    st.info("Switching to results tab...")
+                    
                     # Switch to results tab
                     st.experimental_rerun()
             except Exception as e:
                 st.error(f"An error occurred during search: {str(e)}")
-                import traceback
-                st.text(traceback.format_exc())
+                st.error("Please check the following:")
+                st.error("1. Is the product description valid?")
+                st.error("2. Are the origin and destination countries selected?")
+                st.error("3. Is the API connection working?")
+                
+                # Display detailed error information
+                with st.expander("Detailed Error Information"):
+                    import traceback
+                    st.code(traceback.format_exc())
+                    
+                    # Display the state of the services
+                    st.subheader("Service Status")
+                    st.write(f"API Client initialized: {services['api_client'] is not None}")
+                    st.write(f"LLM Service initialized: {services['llm_service'] is not None}")
+                    st.write(f"Product Analyzer initialized: {services['product_analyzer'] is not None}")
 
 # Results Tab
 with tab2:
