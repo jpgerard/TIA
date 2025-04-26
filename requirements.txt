@@ -1,9 +1,15 @@
-streamlit==1.22.0
+# Use a more stable version of Streamlit
+streamlit==1.28.0
+
+# Specify exact versions for all dependencies
 openai==0.27.8
 requests==2.28.2
-# Removed reportlab dependency
-# Using newer versions of numpy and pandas that are compatible with Python 3.12
-numpy>=1.26.0
-pandas>=2.0.0
+numpy==1.24.3
+pandas==2.0.3
 python-dotenv==1.0.0
-beautifulsoup4==4.13.4
+beautifulsoup4==4.12.2
+
+# Add additional dependencies that might be needed
+protobuf==3.20.3
+pydeck==0.8.0
+pyarrow==12.0.0

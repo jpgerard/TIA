@@ -38,7 +38,8 @@ ENV/
 Thumbs.db
 
 # Streamlit
-.streamlit/
+# Commenting out to allow .streamlit config to be committed
+# .streamlit/
 
 # Logs
 *.log

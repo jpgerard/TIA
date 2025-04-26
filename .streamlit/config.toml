@@ -1,0 +1,36 @@
+[server]
+# Disable the browser opening automatically
+headless = true
+
+# Increase timeout for long-running operations
+connectionTimeout = 300
+
+# Increase the maximum message size
+maxMessageSize = 200
+
+# Disable websocket compression which can cause issues
+enableWebsocketCompression = false
+
+[browser]
+# Disable the browser's cache
+gatherUsageStats = false
+
+[theme]
+# Use a light theme for better compatibility
+base = "light"
+
+[runner]
+# Increase the timeout for script execution
+scriptRunnerTimeoutSec = 120
+
+# Use a fixed port for better stability
+# port = 8501
+
+[client]
+# Increase the timeout for client operations
+toolbarMode = "minimal"
+showErrorDetails = true
+
+[logger]
+# Set logging level to debug for more information
+level = "debug"
