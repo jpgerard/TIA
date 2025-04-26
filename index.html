@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Static HTML Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .container {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>Static HTML Test Page</h1>
+    
+    <div class="success">
+        This is a static HTML page that doesn't rely on Streamlit.
+    </div>
+    
+    <div class="container">
+        <h2>Test Form</h2>
+        <p>If you can see this page, it means the static HTML file is being served correctly.</p>
+        
+        <form id="testForm">
+            <label for="name">Enter your name:</label>
+            <input type="text" id="name" name="name" placeholder="Your name...">
+            
+            <button type="button" onclick="greet()">Submit</button>
+        </form>
+        
+        <div id="result" style="margin-top: 20px;"></div>
+    </div>
+    
+    <div class="container">
+        <h2>Debug Information</h2>
+        <p>Browser: <span id="browser"></span></p>
+        <p>Operating System: <span id="os"></span></p>
+        <p>Screen Resolution: <span id="resolution"></span></p>
+        <p>Current Time: <span id="time"></span></p>
+    </div>
+    
+    <script>
+        // Display debug information
+        document.getElementById('browser').textContent = navigator.userAgent;
+        document.getElementById('resolution').textContent = window.innerWidth + 'x' + window.innerHeight;
+        document.getElementById('time').textContent = new Date().toString();
+        
+        // Detect OS
+        let os = "Unknown";
+        if (navigator.userAgent.indexOf("Win") != -1) os = "Windows";
+        if (navigator.userAgent.indexOf("Mac") != -1) os = "MacOS";
+        if (navigator.userAgent.indexOf("Linux") != -1) os = "Linux";
+        if (navigator.userAgent.indexOf("Android") != -1) os = "Android";
+        if (navigator.userAgent.indexOf("iOS") != -1) os = "iOS";
+        document.getElementById('os').textContent = os;
+        
+        // Greet function
+        function greet() {
+            const name = document.getElementById('name').value;
+            if (name) {
+                document.getElementById('result').innerHTML = `<div class="success">Hello, ${name}! Thanks for testing this page.</div>`;
+            } else {
+                document.getElementById('result').innerHTML = `<div style="background-color: #f8d7da; color: #721c24; padding: 10px; border-radius: 5px;">Please enter your name.</div>`;
+            }
+        }
+    </script>
+</body>
+</html>
