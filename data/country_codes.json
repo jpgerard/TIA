@@ -1,0 +1,62 @@
+{
+  "US": {
+    "name": "United States",
+    "region": "North America"
+  },
+  "CA": {
+    "name": "Canada",
+    "region": "North America"
+  },
+  "MX": {
+    "name": "Mexico",
+    "region": "North America"
+  },
+  "CN": {
+    "name": "China",
+    "region": "Asia"
+  },
+  "JP": {
+    "name": "Japan",
+    "region": "Asia"
+  },
+  "KR": {
+    "name": "South Korea",
+    "region": "Asia"
+  },
+  "DE": {
+    "name": "Germany",
+    "region": "Europe"
+  },
+  "FR": {
+    "name": "France",
+    "region": "Europe"
+  },
+  "GB": {
+    "name": "United Kingdom",
+    "region": "Europe"
+  },
+  "IT": {
+    "name": "Italy",
+    "region": "Europe"
+  },
+  "BR": {
+    "name": "Brazil",
+    "region": "South America"
+  },
+  "IN": {
+    "name": "India",
+    "region": "Asia"
+  },
+  "VN": {
+    "name": "Vietnam",
+    "region": "Asia"
+  },
+  "MY": {
+    "name": "Malaysia",
+    "region": "Asia"
+  },
+  "TH": {
+    "name": "Thailand",
+    "region": "Asia"
+  }
+}
