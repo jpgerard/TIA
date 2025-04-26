@@ -1,18 +1,4 @@
-# Core dependencies
-streamlit==1.28.0
-openai==0.27.8
-requests==2.28.2
-python-dotenv==1.0.0
-beautifulsoup4==4.12.2
-
-# Data processing
-numpy==1.26.0
-pandas==2.0.3
-
-# Streamlit dependencies
-protobuf==3.20.3
-pydeck==0.8.0
-
-# Build tools
-setuptools>=65.5.0
-wheel>=0.38.0
+# Minimal dependencies for Streamlit Cloud
+streamlit>=1.28.0
+pandas>=2.0.0
+numpy>=1.26.0
