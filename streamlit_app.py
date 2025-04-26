@@ -7,8 +7,8 @@ import streamlit as st
 
 # Add error handling to catch any issues
 try:
-    # Import the minimal application
-    from minimal_app import *
+    # Import the main application
+    from app import *
     
     # Add a message to confirm the app is running
     st.sidebar.success("Application loaded successfully!")
