@@ -122,43 +122,51 @@ page = st.radio("Navigation", ["Search", "Results", "Analysis"], horizontal=True
 if page == "Search":
     st.header("Product Search")
     
-    # Product description input
-    product_description = st.text_area(
-        "Enter Product Description",
-        placeholder="e.g., Aluminum bicycle frame, Carbon fiber fishing rod, Plastic toy parts",
-        help="Provide a detailed description of your product including materials and function"
-    )
-    
-    # Country selection
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        # Create a list of country options
-        country_options = [(code, data["name"]) for code, data in country_data.items()]
-        country_options.sort(key=lambda x: x[1])  # Sort by country name
+    # Use a form for the search inputs to avoid text area focus issues
+    with st.form(key="search_form"):
+        # Product description input with a key
+        product_description = st.text_area(
+            "Enter Product Description",
+            placeholder="e.g., Aluminum bicycle frame, Carbon fiber fishing rod, Plastic toy parts",
+            help="Provide a detailed description of your product including materials and function",
+            key="product_description"
+        )
         
-        origin_country = st.selectbox(
-            "Country of Origin",
-            options=[code for code, _ in country_options],
-            format_func=lambda x: next((name for code, name in country_options if code == x), x),
-            index=country_options.index(("JP", "Japan")) if ("JP", "Japan") in country_options else 0
-        )
+        # Country selection inside the form
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            # Create a list of country options
+            country_options = [(code, data["name"]) for code, data in country_data.items()]
+            country_options.sort(key=lambda x: x[1])  # Sort by country name
+            
+            origin_country = st.selectbox(
+                "Country of Origin",
+                options=[code for code, _ in country_options],
+                format_func=lambda x: next((name for code, name in country_options if code == x), x),
+                index=country_options.index(("JP", "Japan")) if ("JP", "Japan") in country_options else 0,
+                key="origin_country"
+            )
+        
+        with col2:
+            destination_country = st.selectbox(
+                "Destination Country",
+                options=[code for code, _ in country_options],
+                format_func=lambda x: next((name for code, name in country_options if code == x), x),
+                index=country_options.index(("US", "United States")) if ("US", "United States") in country_options else 0,
+                key="destination_country"
+            )
+        
+        # Submit button for the form
+        search_submitted = st.form_submit_button("Search for HTS Codes", type="primary")
     
-    with col2:
-        destination_country = st.selectbox(
-            "Destination Country",
-            options=[code for code, _ in country_options],
-            format_func=lambda x: next((name for code, name in country_options if code == x), x),
-            index=country_options.index(("US", "United States")) if ("US", "United States") in country_options else 0
-        )
-    
-    # Demo suggestion
+    # Demo suggestion outside the form
     st.info("""
     **Demo Suggestion:** Try searching "Packing-less bumper retainer" (part that fastens an automobile bumper to the body).  Newly launched for Toyota models; plastic, one-touch pin, no rubber packing, mass-produced from April 2025.Origin Country Japan. Destination country United States.
     """)
     
-    # Search button
-    if st.button("Search for HTS Codes", type="primary"):
+    # Process form submission
+    if search_submitted:
         if not product_description:
             st.error("Please enter a product description")
         else:
@@ -372,7 +380,12 @@ elif page == "Results":
                 else:
                     st.markdown(f"- {description}")
             
-            if st.button("Generate Analysis", type="primary"):
+            # Use a form for the analysis generation to avoid button click issues
+            with st.form(key="analysis_form"):
+                st.write("Click the button below to generate a detailed tariff analysis for the selected HTS code.")
+                analysis_submitted = st.form_submit_button("Generate Analysis", type="primary")
+            
+            if analysis_submitted:
                 try:
                     with st.spinner("Generating tariff analysis..."):
                         # Get comprehensive tariff information
