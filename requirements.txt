@@ -2,7 +2,8 @@ streamlit==1.22.0
 openai==0.27.8
 requests==2.28.2
 # Removed reportlab dependency
-numpy==1.23.5
-pandas==1.5.3
+# Using newer versions of numpy and pandas that are compatible with Python 3.12
+numpy>=1.26.0
+pandas>=2.0.0
 python-dotenv==1.0.0
 beautifulsoup4==4.13.4
