@@ -13,7 +13,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 from utils.api_client import USITCApiClient
 from utils.llm_service import LLMService
-from utils.pdf_generator import PDFGenerator
+# Removed PDF generator import
 from utils.product_analyzer import ProductAnalyzer
 
 # Load environment variables
@@ -91,18 +91,10 @@ def initialize_services():
         llm_service=llm_service
     )
     
-    # Initialize PDF generator
-    logo_path = os.path.join("assets", "multifactor_logo.png")
-    if not os.path.exists(logo_path):
-        logo_path = None
-    
-    pdf_generator = PDFGenerator(logo_path=logo_path)
-    
     return {
         "api_client": api_client,
         "llm_service": llm_service,
-        "product_analyzer": product_analyzer,
-        "pdf_generator": pdf_generator
+        "product_analyzer": product_analyzer
     }
 
 # Load data and initialize services
@@ -342,13 +334,9 @@ with tab2:
                         destination_country=results['destination_country']
                     )
                     
-                    # Generate PDF
-                    pdf_buffer = services["pdf_generator"].generate_tariff_document(document_data)
-                    
                     # Store in session state
                     st.session_state.selected_hts_code = selected_hts_code
                     st.session_state.document_data = document_data
-                    st.session_state.pdf_buffer = pdf_buffer
                     
                     # Switch to analysis tab
                     st.experimental_rerun()
