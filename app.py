@@ -115,11 +115,11 @@ if llm_available:
 else:
     st.warning("⚠️ LLM features are disabled. Add your OpenAI API key to enable enhanced functionality.")
 
-# Create tabs for different sections
-tab1, tab2, tab3 = st.tabs(["Search", "Results", "Analysis"])
+# Create a navigation system using radio buttons instead of tabs
+page = st.radio("Navigation", ["Search", "Results", "Analysis"], horizontal=True)
 
-# Search Tab
-with tab1:
+# Search Page
+if page == "Search":
     st.header("Product Search")
     
     # Product description input
@@ -224,8 +224,8 @@ with tab1:
                     st.write(f"LLM Service initialized: {services['llm_service'] is not None}")
                     st.write(f"Product Analyzer initialized: {services['product_analyzer'] is not None}")
 
-# Results Tab
-with tab2:
+# Results Page
+elif page == "Results":
     if st.session_state.search_results:
         results = st.session_state.search_results
         
@@ -387,8 +387,9 @@ with tab2:
                         st.session_state.selected_hts_code = selected_hts_code
                         st.session_state.document_data = document_data
                         
-                        # Switch to analysis tab
-                        st.experimental_rerun()
+                        # Provide instructions to view analysis
+                        st.success("Analysis generated successfully!")
+                        st.info("Click on the 'Analysis' option in the navigation to view the detailed analysis.")
                 except Exception as e:
                     st.error(f"An error occurred while generating analysis: {str(e)}")
                     import traceback
@@ -398,8 +399,8 @@ with tab2:
     else:
         st.info("Enter a product description in the Search tab to find HTS codes.")
 
-# Analysis Tab
-with tab3:
+# Analysis Page
+elif page == "Analysis":
     if st.session_state.document_data:
         data = st.session_state.document_data
         
