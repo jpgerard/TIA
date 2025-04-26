@@ -1,4 +1,1 @@
-build-essential
-python3-dev
-cmake
-libssl-dev
+# Minimal system dependencies
