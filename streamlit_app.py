@@ -167,33 +167,28 @@ if page == "Search":
                             "HTS_TERMINOLOGY": "Not analyzed"
                         }
                     
-                    # Search for HTS codes using the API client
-                    try:
-                        hts_results = []
-                        for term in search_terms:
-                            results = api_client.search(term)
-                            for result in results:
-                                # Check if this result is already in hts_results
-                                if not any(r.get("hts_code") == result.get("hts_code") for r in hts_results):
-                                    hts_results.append(result)
-                        
-                        # If we got results, analyze confidence with LLM
-                        if hts_results and llm_service.is_enabled():
-                            hts_results = llm_service.analyze_hs_code_confidence(product_description, hts_results)
-                        
-                        # If no results from API, use sample data as fallback
-                        if not hts_results:
-                            st.warning("No results from API. Using sample data.")
-                            # Use sample data as fallback
-                            for item in sample_data["hts_data"]:
-                                if any(term.lower() in item["description"].lower() for term in search_terms):
-                                    hts_results.append(item)
-                            
-                            # If still no results, add some general results
-                            if not hts_results:
-                                hts_results = sample_data["hts_data"][:3]
-                    except Exception as e:
-                        st.error(f"API search failed: {str(e)}")
+                    # Import the product analyzer
+                    from utils.product_analyzer import ProductAnalyzer
+                    
+                    # Create a product analyzer
+                    product_analyzer = ProductAnalyzer(api_client, llm_service)
+                    
+                    # Analyze the product
+                    analysis_results = product_analyzer.analyze_product(
+                        product_description,
+                        origin_country,
+                        destination_country
+                    )
+                    
+                    # Extract the HTS results
+                    hts_results = analysis_results.get("hts_results", [])
+                    
+                    # Extract the product analysis
+                    product_analysis = analysis_results.get("product_analysis")
+                    
+                    # If no results, use sample data as fallback
+                    if not hts_results:
+                        st.warning("No results from analysis. Using sample data.")
                         # Use sample data as fallback
                         hts_results = sample_data["hts_data"][:5]
                     
