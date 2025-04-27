@@ -30,7 +30,27 @@ if "document_data" not in st.session_state:
 if "pdf_buffer" not in st.session_state:
     st.session_state.pdf_buffer = None
 
-# Load sample data for demo
+# Initialize API client and LLM service
+from utils.api_client import USITCApiClient
+from utils.llm_service import LLMService
+
+# Check for API keys in Streamlit secrets
+api_key = None
+model = "gpt-4"
+
+if "openai" in st.secrets:
+    api_key = st.secrets["openai"].get("OPENAI_API_KEY")
+    model = st.secrets["openai"].get("OPENAI_MODEL", "gpt-4")
+else:
+    # Try to load from environment variables as fallback
+    api_key = os.getenv("OPENAI_API_KEY")
+    model = os.getenv("OPENAI_MODEL", "gpt-4")
+
+# Initialize services
+api_client = USITCApiClient(cache_enabled=True)
+llm_service = LLMService(api_key=api_key, model=model, cache_enabled=True)
+
+# Load sample data for fallback
 @st.cache_data
 def load_sample_data():
     try:
@@ -59,7 +79,7 @@ def load_sample_data():
             "trade_agreements": []
         }
 
-# Load sample data
+# Load sample data for fallback
 sample_data = load_sample_data()
 
 # Main application header
@@ -130,44 +150,61 @@ if page == "Search":
         else:
             try:
                 with st.spinner("Searching for HTS codes..."):
-                    # Simulate API call with sample data
-                    # In a real app, this would call the API client
+                    # Use LLM to enhance search query if available
+                    if llm_service.is_enabled():
+                        st.info("Using AI to analyze product description...")
+                        search_terms = llm_service.enhance_search_query(product_description)
+                        
+                        # Get product analysis from LLM cache
+                        product_analysis = llm_service.cache.get(f"analysis_{product_description}")
+                    else:
+                        st.warning("AI analysis not available. Using basic search.")
+                        search_terms = [product_description]
+                        product_analysis = {
+                            "MATERIALS": ["Plastic"] if "plastic" in product_description.lower() else [],
+                            "FUNCTION": "Not analyzed",
+                            "INDUSTRY_TERMS": [],
+                            "HTS_TERMINOLOGY": "Not analyzed"
+                        }
                     
-                    # Find matching HTS codes from sample data
-                    hts_results = []
-                    
-                    # Check for automotive parts in the description
-                    if any(term in product_description.lower() for term in ["bumper", "automobile", "car", "vehicle", "automotive"]):
-                        # Add automotive parts HTS codes
-                        for item in sample_data["hts_data"]:
-                            if "bumper" in item["description"].lower() or "vehicle" in item["description"].lower():
-                                hts_results.append(item)
-                    
-                    # Check for plastic parts
-                    if "plastic" in product_description.lower():
-                        # Add plastic parts HTS codes
-                        for item in sample_data["hts_data"]:
-                            if "plastic" in item["description"].lower() and item not in hts_results:
-                                hts_results.append(item)
-                    
-                    # If no specific matches, add some general results
-                    if not hts_results:
-                        # Add some general results
-                        hts_results = sample_data["hts_data"][:3]
+                    # Search for HTS codes using the API client
+                    try:
+                        hts_results = []
+                        for term in search_terms:
+                            results = api_client.search(term)
+                            for result in results:
+                                # Check if this result is already in hts_results
+                                if not any(r.get("hts_code") == result.get("hts_code") for r in hts_results):
+                                    hts_results.append(result)
+                        
+                        # If we got results, analyze confidence with LLM
+                        if hts_results and llm_service.is_enabled():
+                            hts_results = llm_service.analyze_hs_code_confidence(product_description, hts_results)
+                        
+                        # If no results from API, use sample data as fallback
+                        if not hts_results:
+                            st.warning("No results from API. Using sample data.")
+                            # Use sample data as fallback
+                            for item in sample_data["hts_data"]:
+                                if any(term.lower() in item["description"].lower() for term in search_terms):
+                                    hts_results.append(item)
+                            
+                            # If still no results, add some general results
+                            if not hts_results:
+                                hts_results = sample_data["hts_data"][:3]
+                    except Exception as e:
+                        st.error(f"API search failed: {str(e)}")
+                        # Use sample data as fallback
+                        hts_results = sample_data["hts_data"][:5]
                     
                     # Create search results object
                     results = {
                         "product_description": product_description,
                         "origin_country": origin_country,
                         "destination_country": destination_country,
-                        "search_terms": ["bumper", "plastic", "automotive parts"],
+                        "search_terms": search_terms,
                         "hts_results": hts_results,
-                        "product_analysis": {
-                            "MATERIALS": ["Plastic"],
-                            "FUNCTION": "Fastens an automobile bumper to the body",
-                            "INDUSTRY_TERMS": ["Bumper retainer", "One-touch pin"],
-                            "HTS_TERMINOLOGY": "Parts and accessories of bodies for motor vehicles"
-                        }
+                        "product_analysis": product_analysis
                     }
                     
                     # Store results in session state
@@ -292,22 +329,48 @@ elif page == "Results":
             if analysis_submitted:
                 try:
                     with st.spinner("Generating tariff analysis..."):
-                        # Simulate API call with sample data
-                        # In a real app, this would call the API client
-                        
-                        # Create document data from sample data
-                        document_data = {
-                            "product_description": results['product_description'],
-                            "hts_code": selected_hts_code,
-                            "hts_description": selected_result['description'],
-                            "origin_country": results['origin_country'],
-                            "destination_country": results['destination_country'],
-                            "rates": selected_result['rates'],
-                            "trade_agreements": [
+                        # Try to get trade agreement eligibility from API
+                        try:
+                            trade_agreements_data = api_client.get_trade_agreement_eligibility(
+                                selected_hts_code, 
+                                results['origin_country'], 
+                                results['destination_country']
+                            )
+                            
+                            # Format trade agreements for display
+                            trade_agreements = []
+                            for agreement in trade_agreements_data.get("eligible_agreements", []):
+                                trade_agreements.append({
+                                    "name": agreement.get("agreement", "Unknown"),
+                                    "eligible": True,
+                                    "rate": agreement.get("rate", "0%"),
+                                    "requirements": agreement.get("requirements", "Not specified")
+                                })
+                                
+                            # If no eligible agreements found, add a placeholder
+                            if not trade_agreements:
+                                trade_agreements = [
+                                    {
+                                        "name": "USMCA",
+                                        "eligible": results['origin_country'] in ["MX", "CA"] and results['destination_country'] == "US",
+                                        "rate": "0%" if results['origin_country'] in ["MX", "CA"] and results['destination_country'] == "US" else "N/A",
+                                        "requirements": "Regional Value Content ≥ 60%"
+                                    },
+                                    {
+                                        "name": "GSP",
+                                        "eligible": False,
+                                        "rate": "N/A",
+                                        "requirements": "Not applicable"
+                                    }
+                                ]
+                        except Exception as e:
+                            st.warning(f"Could not retrieve trade agreement data: {str(e)}")
+                            # Fallback trade agreements
+                            trade_agreements = [
                                 {
                                     "name": "USMCA",
-                                    "eligible": True,
-                                    "rate": "0%",
+                                    "eligible": results['origin_country'] in ["MX", "CA"] and results['destination_country'] == "US",
+                                    "rate": "0%" if results['origin_country'] in ["MX", "CA"] and results['destination_country'] == "US" else "N/A",
                                     "requirements": "Regional Value Content ≥ 60%"
                                 },
                                 {
@@ -316,27 +379,41 @@ elif page == "Results":
                                     "rate": "N/A",
                                     "requirements": "Not applicable"
                                 }
-                            ],
-                            "strategies": [
-                                {
-                                    "name": "USMCA Re-routing",
-                                    "description": "Move final assembly to Mexico to qualify for USMCA preferential treatment",
-                                    "savings": "2.5%",
-                                    "implementation": "Medium"
-                                },
-                                {
-                                    "name": "Duty Drawback",
-                                    "description": "Claim duty refund for imported goods that are subsequently exported",
-                                    "savings": "Up to 99% refund",
-                                    "implementation": "Complex"
-                                },
-                                {
-                                    "name": "First Sale Valuation",
-                                    "description": "Declare customs value based on first sale price",
-                                    "savings": "10-15% reduction in duty base",
-                                    "implementation": "Medium"
-                                }
                             ]
+                        
+                        # Generate tariff minimization strategies
+                        # In a real implementation, this would use the LLM to generate custom strategies
+                        strategies = [
+                            {
+                                "name": "USMCA Re-routing",
+                                "description": "Move final assembly to Mexico to qualify for USMCA preferential treatment",
+                                "savings": "2.5%",
+                                "implementation": "Medium"
+                            },
+                            {
+                                "name": "Duty Drawback",
+                                "description": "Claim duty refund for imported goods that are subsequently exported",
+                                "savings": "Up to 99% refund",
+                                "implementation": "Complex"
+                            },
+                            {
+                                "name": "First Sale Valuation",
+                                "description": "Declare customs value based on first sale price",
+                                "savings": "10-15% reduction in duty base",
+                                "implementation": "Medium"
+                            }
+                        ]
+                        
+                        # Create document data
+                        document_data = {
+                            "product_description": results['product_description'],
+                            "hts_code": selected_hts_code,
+                            "hts_description": selected_result['description'],
+                            "origin_country": results['origin_country'],
+                            "destination_country": results['destination_country'],
+                            "rates": selected_result['rates'],
+                            "trade_agreements": trade_agreements,
+                            "strategies": strategies
                         }
                         
                         # Store in session state
